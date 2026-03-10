@@ -14,9 +14,22 @@ class PokemonDetails extends StatelessWidget {
       appBar: AppBar(title: Text(name)),
 
       body: Center(
-        child: Column()
-      )
-    )
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.network(
+              'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/$id.png',
+              width: 150,
+            ),
+            SizedBox(height: 20),
+            Text(
+              name.toUpperCase(),
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
 }

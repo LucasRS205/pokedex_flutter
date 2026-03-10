@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'services/api_service.dart';
+import 'screens/pokemon_details.dart';
 
 void main(){
   runApp(MyApp());
@@ -34,6 +35,16 @@ class MyApp extends StatelessWidget {
                       width: 50,
                     ),
                     title: Text(pokemons[index]['name']),
+
+                    onTap: (){
+                      Navigator.push(context, 
+                        MaterialPageRoute(builder: (context) => PokemonDetails(
+                          name: pokemons[index]['name'],
+                          id: index + 1,
+                        ),
+                      ),
+                      );
+                    }
                   );
                 },
               );
