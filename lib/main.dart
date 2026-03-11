@@ -1,58 +1,29 @@
 import 'package:flutter/material.dart';
-import 'services/api_service.dart';
-import 'screens/pokemon_details.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-void main(){
-  runApp(MyApp());
+import 'pokemon_list.dart'; // ou sua tela inicial
+
+void main() async {
+
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  runApp(const MyApp());
 
 }
 
 class MyApp extends StatelessWidget {
-  final ApiService api = ApiService();
-
-  MyApp({super.key});
+  const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(title: Text("Pokédex")),
-
-        body: FutureBuilder(
-          future: api.fetchPokemons(),
-
-          builder: (context, snapshot){
-
-            if(snapshot.hasData){
-              List pokemons = snapshot.data as List;
-
-              return ListView.builder(
-                itemCount: pokemons.length,
-                itemBuilder: (context, index){
-                  return ListTile(
-                    leading: Image.network(
-                      'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${index + 1}.png',
-                      width: 50,
-                    ),
-                    title: Text(pokemons[index]['name']),
-
-                    onTap: (){
-                      Navigator.push(context, 
-                        MaterialPageRoute(builder: (context) => PokemonDetails(
-                          name: pokemons[index]['name'],
-                          id: index + 1,
-                        ),
-                      ),
-                      );
-                    }
-                  );
-                },
-              );
-            }
-            return Center(child: CircularProgressIndicator());
-          },
-        ),
-      ),
+      title: 'Pokedex',
+      home: PokemonList(),
     );
   }
 }
