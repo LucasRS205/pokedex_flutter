@@ -13,6 +13,7 @@ class PokemonList extends StatefulWidget {
 class _PokemonListState extends State<PokemonList> {
 
   List pokemons = [];
+  List filterPokemons = [];
 
   @override
   void initState() {
@@ -23,15 +24,27 @@ class _PokemonListState extends State<PokemonList> {
   Future fetchPokemons() async {
 
     final response = await http.get(
-      Uri.parse("https://pokeapi.co/api/v2/pokemon?limit=50")
+      Uri.parse("https://pokeapi.co/api/v2/pokemon?limit=151")
     );
 
     final data = jsonDecode(response.body);
 
     setState(() {
       pokemons = data["results"];
+      filterPokemons = pokemons;
     });
+    
   }
+  void searchPokemon(String query) {
+      final filtered = pokemons.where((pokemon) {
+        final name = pokemon["name"].toLowerCase();
+        return name.contains(query.toLowerCase());
+      }).toList();
+
+      setState(() {
+        filterPokemons = filtered;
+      });
+    }
 
   @override
   Widget build(BuildContext context) {
@@ -39,33 +52,43 @@ class _PokemonListState extends State<PokemonList> {
     return Scaffold(
       appBar: AppBar(title: const Text("Pokedex")),
 
-      body: ListView.builder(
-        itemCount: pokemons.length,
-        itemBuilder: (context, index) {
-
-          return ListTile(
-            leading: Image.network(
-              "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${index + 1}.png",
-
+      body: Column(children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: TextField(
+            onChanged: searchPokemon,
+            decoration: const InputDecoration(
+              labelText: "Pesquisar Pokemon",
+              border: OutlineInputBorder(),
             ),
-            title: Text(pokemons[index]["name"]),
-            onTap: () {
-
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => PokemonDetails(
-          name: pokemons[index]["name"],
-          id: index + 1,
+          ),
         ),
-      ),
-    );
 
-  },
-);
-
-        },
-      ),
+        Expanded(
+          child: ListView.builder(
+            itemCount: filterPokemons.length,
+            itemBuilder: (context, index) {
+              return ListTile(
+                leading: Image.network(
+                  "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemons.indexOf(filterPokemons[index]) + 1}.png",
+                ),
+                title: Text(filterPokemons[index]["name"]),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => PokemonDetails(
+                        name: filterPokemons[index]["name"],
+                        id: pokemons.indexOf(filterPokemons[index]) + 1,
+                      ),
+                    ),
+                  );
+                },
+              );
+            },
+          ),
+        ),
+      ]),
     );
   }
 }
