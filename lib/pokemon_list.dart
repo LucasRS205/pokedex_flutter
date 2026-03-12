@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'screens/pokemon_details.dart';
+import 'screens/favorites_screen.dart';
 
 class PokemonList extends StatefulWidget {
   const PokemonList({super.key});
@@ -12,8 +13,8 @@ class PokemonList extends StatefulWidget {
 
 class _PokemonListState extends State<PokemonList> {
 
-  List pokemons = [];
-  List filterPokemons = [];
+  List <Map<String, dynamic>> pokemons = [];
+  List <Map<String, dynamic>> filterPokemons = [];
 
   @override
   void initState() {
@@ -21,20 +22,41 @@ class _PokemonListState extends State<PokemonList> {
     fetchPokemons();
   }
 
-  Future fetchPokemons() async {
+ Future fetchPokemons() async {
+  print("Carregando Pokemons...");
+  final response = await http.get(
+    Uri.parse("https://pokeapi.co/api/v2/pokemon?limit=151"),
+  );
 
-    final response = await http.get(
-      Uri.parse("https://pokeapi.co/api/v2/pokemon?limit=151")
+  final data = jsonDecode(response.body);
+  final results = data["results"] as List;
+
+  List<Map<String, dynamic>> loadedPokemons = [];
+
+  for (int i = 0; i < results.length; i++) {
+    final pokemonResponse = await http.get(
+      Uri.parse("https://pokeapi.co/api/v2/pokemon/${i + 1}"),
     );
 
-    final data = jsonDecode(response.body);
+    final pokemonData = jsonDecode(pokemonResponse.body);
 
-    setState(() {
-      pokemons = data["results"];
-      filterPokemons = pokemons;
+    List<String> types = (pokemonData["types"] as List)
+        .map((item) => item["type"]["name"] as String)
+        .toList();
+
+    loadedPokemons.add({
+      "name": pokemonData["name"],
+      "id": pokemonData["id"],
+      "types": types,
     });
-    
   }
+  print("Terminou de carregar: ${loadedPokemons.length}");
+
+  setState(() {
+    pokemons = loadedPokemons;
+    filterPokemons = loadedPokemons;
+  });
+}
   void searchPokemon(String query) {
       final filtered = pokemons.where((pokemon) {
         final name = pokemon["name"].toLowerCase();
@@ -45,33 +67,84 @@ class _PokemonListState extends State<PokemonList> {
         filterPokemons = filtered;
       });
     }
-  Color getCardColor(int pokemonId) {
-  if (pokemonId <= 3) {
-    return Colors.green.shade200;
-  } else if (pokemonId <= 6) {
-    return Colors.orange.shade200;
-  } else if (pokemonId <= 9) {
-    return Colors.blue.shade200;
-  } else if (pokemonId == 25) {
-    return Colors.yellow.shade200;
-  } else if (pokemonId == 39) {
-    return Colors.pink.shade200;
-  } else if (pokemonId == 94) {
-    return Colors.deepPurple.shade200;
-  } else if (pokemonId == 95) {
-    return Colors.brown.shade300;
-  } else if (pokemonId == 150 || pokemonId == 151) {
-    return Colors.indigo.shade200;
-  } else {
-    return Colors.grey.shade200;
+
+  Color getTypeColor(String type) {
+  switch (type) {
+    case "grass":
+      return Colors.green;
+    case "fire":
+      return Colors.orange;
+    case "water":
+      return Colors.blue;
+    case "bug":
+      return Colors.lightGreen;
+    case "normal":
+      return Colors.grey;
+    case "poison":
+      return Colors.purple;
+    case "electric":
+      return Colors.yellow;
+    case "ground":
+      return Colors.brown;
+    case "fairy":
+      return Colors.pinkAccent;
+    case "fighting":
+      return Colors.red;
+    case "psychic":
+      return Colors.indigo;
+    case "rock":
+      return Colors.brown.shade300;
+    case "ghost":
+      return Colors.deepPurple;
+    case "ice":
+      return Colors.cyan;
+    case "dragon":
+      return Colors.indigoAccent;
+    case "flying":
+      return Colors.lightBlueAccent;
+    default:
+      return Colors.black12;
   }
 }
+
+  BoxDecoration getPokemonCardDecoration(List types) {
+  if (types.length == 1) {
+    return BoxDecoration(
+      color: getTypeColor(types[0]),
+      borderRadius: BorderRadius.circular(16),
+    );
+  } else {
+    return BoxDecoration(
+      gradient: LinearGradient(
+        colors: [
+          getTypeColor(types[0]),
+          getTypeColor(types[1]),
+        ],
+        begin: Alignment.centerLeft,
+        end: Alignment.centerRight,
+      ),
+      borderRadius: BorderRadius.circular(16),
+    );
+  }
+}
+
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
-      appBar: AppBar(title: const Text("Pokedex")),
-
+      appBar: AppBar(title: const Text("Pokedex"),
+      actions: [
+        IconButton(
+          icon: const Icon(Icons.favorite),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const FavoritesScreen()),
+            );
+          },
+        )
+      ],
+      ),
       body: Column(children: [
         Padding(
           padding: const EdgeInsets.all(8.0),
@@ -84,83 +157,78 @@ class _PokemonListState extends State<PokemonList> {
           ),
         ),
 
-        Expanded(
-          child: ListView.builder(
-            itemCount: filterPokemons.length,
-            itemBuilder: (context, index) {
-              final pokemonId = pokemons.indexOf(filterPokemons[index]) + 1;
+       Expanded(
+  child: filterPokemons.isEmpty
+      ? const Center(child: CircularProgressIndicator())
+      : ListView.builder(
+          itemCount: filterPokemons.length,
+          itemBuilder: (context, index) {
+            final pokemon = filterPokemons[index];
+            final pokemonId = pokemon["id"];
+            final pokemonTypes = pokemon["types"] as List;
 
-return Card(
-  color: getCardColor(pokemonId),
-  margin: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-  elevation: 4,
-  shape: RoundedRectangleBorder(
-    borderRadius: BorderRadius.circular(16),
-  ),
-  child: InkWell(
-    borderRadius: BorderRadius.circular(16),
-    onTap: () {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => PokemonDetails(
-            name: filterPokemons[index]["name"],
-            id: pokemonId,
-          ),
+            return Container(
+              margin: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+              decoration: getPokemonCardDecoration(pokemonTypes),
+              child: Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(16),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => PokemonDetails(
+                          name: pokemon["name"],
+                          id: pokemonId,
+                        ),
+                      ),
+                    );
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.all(12),
+                    child: Row(
+                      children: [
+                        Image.network(
+                          "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/$pokemonId.png",
+                          width: 72,
+                          height: 72,
+                        ),
+                        SizedBox(width: 16),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "#${pokemonId.toString().padLeft(3, '0')}",
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.white70,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              SizedBox(height: 4),
+                              Text(
+                                pokemon["name"].toUpperCase(),
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Icon(Icons.arrow_forward_ios, size: 18, color: Colors.white),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            );
+          },
         ),
-      );
-    },
-    child: Padding(
-      padding: EdgeInsets.all(12),
-      child: Row(
-        children: [
-
-          Image.network(
-            "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/$pokemonId.png",
-            width: 72,
-            height: 72,
-          ),
-
-          SizedBox(width: 16),
-
-         Expanded(
-  child: Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-
-      Text(
-        "#${pokemonId.toString().padLeft(3, '0')}",
-        style: TextStyle(
-          fontSize: 14,
-          color: Colors.grey[600],
-          fontWeight: FontWeight.w500,
-        ),
-      ),
-
-      SizedBox(height: 4),
-
-      Text(
-        filterPokemons[index]["name"].toUpperCase(),
-        style: TextStyle(
-          fontSize: 18,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-
-    ],
-  ),
 ),
-
-          Icon(Icons.arrow_forward_ios, size: 18),
-
-        ],
-      ),
-    ),
-  ),
-);
-            },
-          ),
-        ),
       ]),
     );
   }
