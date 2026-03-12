@@ -45,7 +45,27 @@ class _PokemonListState extends State<PokemonList> {
         filterPokemons = filtered;
       });
     }
-
+  Color getCardColor(int pokemonId) {
+  if (pokemonId <= 3) {
+    return Colors.green.shade200;
+  } else if (pokemonId <= 6) {
+    return Colors.orange.shade200;
+  } else if (pokemonId <= 9) {
+    return Colors.blue.shade200;
+  } else if (pokemonId == 25) {
+    return Colors.yellow.shade200;
+  } else if (pokemonId == 39) {
+    return Colors.pink.shade200;
+  } else if (pokemonId == 94) {
+    return Colors.deepPurple.shade200;
+  } else if (pokemonId == 95) {
+    return Colors.brown.shade300;
+  } else if (pokemonId == 150 || pokemonId == 151) {
+    return Colors.indigo.shade200;
+  } else {
+    return Colors.grey.shade200;
+  }
+}
   @override
   Widget build(BuildContext context) {
 
@@ -68,23 +88,76 @@ class _PokemonListState extends State<PokemonList> {
           child: ListView.builder(
             itemCount: filterPokemons.length,
             itemBuilder: (context, index) {
-              return ListTile(
-                leading: Image.network(
-                  "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemons.indexOf(filterPokemons[index]) + 1}.png",
-                ),
-                title: Text(filterPokemons[index]["name"]),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => PokemonDetails(
-                        name: filterPokemons[index]["name"],
-                        id: pokemons.indexOf(filterPokemons[index]) + 1,
-                      ),
-                    ),
-                  );
-                },
-              );
+              final pokemonId = pokemons.indexOf(filterPokemons[index]) + 1;
+
+return Card(
+  color: getCardColor(pokemonId),
+  margin: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+  elevation: 4,
+  shape: RoundedRectangleBorder(
+    borderRadius: BorderRadius.circular(16),
+  ),
+  child: InkWell(
+    borderRadius: BorderRadius.circular(16),
+    onTap: () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => PokemonDetails(
+            name: filterPokemons[index]["name"],
+            id: pokemonId,
+          ),
+        ),
+      );
+    },
+    child: Padding(
+      padding: EdgeInsets.all(12),
+      child: Row(
+        children: [
+
+          Image.network(
+            "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/$pokemonId.png",
+            width: 72,
+            height: 72,
+          ),
+
+          SizedBox(width: 16),
+
+         Expanded(
+  child: Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+
+      Text(
+        "#${pokemonId.toString().padLeft(3, '0')}",
+        style: TextStyle(
+          fontSize: 14,
+          color: Colors.grey[600],
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+
+      SizedBox(height: 4),
+
+      Text(
+        filterPokemons[index]["name"].toUpperCase(),
+        style: TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+
+    ],
+  ),
+),
+
+          Icon(Icons.arrow_forward_ios, size: 18),
+
+        ],
+      ),
+    ),
+  ),
+);
             },
           ),
         ),
