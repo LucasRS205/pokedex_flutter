@@ -111,7 +111,14 @@ class _PokemonListState extends State<PokemonList> {
   if (types.length == 1) {
     return BoxDecoration(
       color: getTypeColor(types[0]),
-      borderRadius: BorderRadius.circular(16),
+      borderRadius: BorderRadius.circular(20),
+      boxShadow: const [
+        BoxShadow(
+          color: Colors.black26,
+          blurRadius: 6,
+          offset: Offset(2, 4),
+        ),
+      ],
     );
   } else {
     return BoxDecoration(
@@ -123,7 +130,14 @@ class _PokemonListState extends State<PokemonList> {
         begin: Alignment.centerLeft,
         end: Alignment.centerRight,
       ),
-      borderRadius: BorderRadius.circular(16),
+      borderRadius: BorderRadius.circular(20),
+      boxShadow: const [
+        BoxShadow(
+          color: Colors.black26,
+          blurRadius: 6,
+          offset: Offset(2, 4),
+        ),
+      ],
     );
   }
 }
@@ -160,15 +174,22 @@ class _PokemonListState extends State<PokemonList> {
        Expanded(
   child: filterPokemons.isEmpty
       ? const Center(child: CircularProgressIndicator())
-      : ListView.builder(
+      : GridView.builder(
+          padding: const EdgeInsets.all(8),
           itemCount: filterPokemons.length,
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            crossAxisSpacing: 10,
+            mainAxisSpacing: 10,
+            childAspectRatio: 0.72,
+          ),
           itemBuilder: (context, index) {
             final pokemon = filterPokemons[index];
             final pokemonId = pokemon["id"];
             final pokemonTypes = pokemon["types"] as List;
 
             return Container(
-              margin: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+              margin: const EdgeInsets.all(4),
               decoration: getPokemonCardDecoration(pokemonTypes),
               child: Material(
                 color: Colors.transparent,
@@ -186,40 +207,35 @@ class _PokemonListState extends State<PokemonList> {
                     );
                   },
                   child: Padding(
-                    padding: EdgeInsets.all(12),
-                    child: Row(
+                    padding: const EdgeInsets.all(12),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Image.network(
-                          "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/$pokemonId.png",
-                          width: 72,
-                          height: 72,
-                        ),
-                        SizedBox(width: 16),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "#${pokemonId.toString().padLeft(3, '0')}",
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.white70,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              SizedBox(height: 4),
-                              Text(
-                                pokemon["name"].toUpperCase(),
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ],
+                        Text(
+                          "#${pokemonId.toString().padLeft(3, '0')}",
+                          style: const TextStyle(
+                            fontSize: 14,
+                            color: Colors.white70,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
-                        Icon(Icons.arrow_forward_ios, size: 18, color: Colors.white),
+                        const SizedBox(height: 8),
+                        Text(
+                          pokemon["name"].toUpperCase(),
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                        const SizedBox(height: 12),
+                        Expanded(
+                          child: Image.network(
+                            "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/$pokemonId.png",
+                            fit: BoxFit.contain,
+                          ),
+                        ),
                       ],
                     ),
                   ),

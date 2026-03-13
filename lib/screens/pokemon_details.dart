@@ -23,6 +23,12 @@ class _PokemonDetailsState extends State<PokemonDetails> {
   double height = 0;
   double weight = 0;
 
+  int hp = 0;
+  int attack = 0;
+  int defense = 0;
+  int speed = 0;
+
+
   @override
   void initState() {
     super.initState();
@@ -135,6 +141,29 @@ class _PokemonDetailsState extends State<PokemonDetails> {
       return Colors.black54;
   }
 }
+Widget _buildStat(String name, int value) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(vertical: 6),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "$name: $value",
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Colors.black87,
+          ),
+        ),
+        const SizedBox(height: 6),
+        LinearProgressIndicator(
+          value: value / 200,
+          minHeight: 8,
+          borderRadius: BorderRadius.circular(10),
+        ),
+      ],
+    ),
+  );
+}
   @override
   Widget build(BuildContext context) {
 
@@ -142,75 +171,175 @@ class _PokemonDetailsState extends State<PokemonDetails> {
       appBar: AppBar(title: Text(widget.name)),
       backgroundColor: getPokemonColor(),
 
-      body: Center(
-        child: Column(
-          
-          children: [
+      body: SingleChildScrollView(
+  child: Column(
+    children: [
 
-            Image.network(
-  'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${widget.id}.png',
-  width: 200,
-),
+      SizedBox(height: 20),
 
-            Text(
-              widget.name.toUpperCase(),
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
-        ),
-
-            Padding(
-              padding: EdgeInsets.all(16),
-              child: Text(description, textAlign: TextAlign.center, style: TextStyle(fontSize: 16, color: Colors.white),
-              ),
-            ),
-
-            SizedBox(height: 10),
-
-           Wrap(
-  spacing: 8,
-  children: types.map((typeName) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      decoration: BoxDecoration(
-        color: getTypeColor(typeName),
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Text(
-        typeName.toUpperCase(),
-        style: TextStyle(
-          color: Colors.white,
+      Text(
+        "#${widget.id.toString().padLeft(3, '0')}",
+        style: const TextStyle(
+          color: Colors.white70,
+          fontSize: 20,
           fontWeight: FontWeight.bold,
         ),
       ),
-    );
-  }).toList(),
-),
 
-SizedBox(height: 10),
+      const SizedBox(height: 8),
 
-Text(
-  "Altura: ${height} m",
-  style: TextStyle(color: Colors.white),
-),
+      Text(
+        widget.name.toUpperCase(),
+        style: const TextStyle(
+          color: Colors.white,
+          fontSize: 32,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
 
-Text(
-  "Peso: ${weight} kg",
-  style: TextStyle(color: Colors.white),
-),
+      const SizedBox(height: 20),
 
-            ElevatedButton(
+      Image.network(
+        "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${widget.id}.png",
+        height: 220,
+      ),
+
+      const SizedBox(height: 20),
+
+      Container(
+        width: double.infinity,
+        padding: const EdgeInsets.all(24),
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(30),
+            topRight: Radius.circular(30),
+          ),
+        ),
+        child: Column(
+          children: [
+
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                description,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontSize: 16,
+                  color: Colors.black87,
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 16),
+
+            Wrap(
+              spacing: 8,
+              children: types.map((typeName) {
+                return Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  decoration: BoxDecoration(
+                    color: getTypeColor(typeName),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Text(
+                    typeName.toUpperCase(),
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                );
+              }).toList(),
+            ),
+
+            const SizedBox(height: 24),
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+
+                Column(
+                  children: [
+                    const Text(
+                      "Altura",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black54,
+                      ),
+                    ),
+                    const SizedBox(height: 6),
+                    Text(
+                      "${height} m",
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+
+                Column(
+                  children: [
+                    const Text(
+                      "Peso",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black54,
+                      ),
+                    ),
+                    const SizedBox(height: 6),
+                    Text(
+                      "${weight} kg",
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+
+              ],
+            ),
+
+            const SizedBox(height: 24),
+
+            const SizedBox(height: 24),
+            const Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                "Status",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black87,
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 12),
+
+            _buildStat("HP", hp),
+            _buildStat("Attack", attack),
+            _buildStat("Defense", defense),
+            _buildStat("Speed", speed),
+
+            const SizedBox(height: 24),
+            ElevatedButton.icon(
               onPressed: () {
                 firebase.salvarFavorito(widget.name);
               },
-              child: Text("Salvar favorito"),
+              icon: const Icon(Icons.favorite),
+              label: const Text("Salvar favorito"),
             ),
 
           ],
         ),
       ),
+
+    ],
+  ),
+),
     );
   }
  Future fetchPokemonData() async {
@@ -227,6 +356,11 @@ Text(
 
   height = data["height"] / 10;
   weight = data["weight"] / 10;
+
+  hp = data["stats"][0]["base_stat"];
+  attack = data["stats"][1]["base_stat"];
+  defense = data["stats"][2]["base_stat"];
+  speed = data["stats"][5]["base_stat"];
 });
   }
 }
