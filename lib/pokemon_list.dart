@@ -244,10 +244,13 @@ class _PokemonListState extends State<PokemonList> {
               ),
               const SizedBox(height: 6),
               Expanded(
+                child: Hero(
+                  tag: "pokemon-$pokemonId",
                 child: Image.network(
                   "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/$pokemonId.png",
                   fit: BoxFit.contain,
                   scale: 0.7
+                ),
                 ),
               ),
             ],

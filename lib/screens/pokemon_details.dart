@@ -201,9 +201,12 @@ Widget _buildStat(String name, int value) {
 
       const SizedBox(height: 20),
 
-      Image.network(
+      Hero(
+        tag: "pokemon-${widget.id}",
+        child: Image.network(
         "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${widget.id}.png",
         height: 200,
+      ),
       ),
 
       const SizedBox(height: 20),
