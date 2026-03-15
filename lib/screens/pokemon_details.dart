@@ -28,6 +28,8 @@ class _PokemonDetailsState extends State<PokemonDetails> {
   int defense = 0;
   int speed = 0;
 
+  bool isFavorite = false;
+
 
   @override
   void initState() {
@@ -201,7 +203,7 @@ Widget _buildStat(String name, int value) {
 
       Image.network(
         "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${widget.id}.png",
-        height: 220,
+        height: 200,
       ),
 
       const SizedBox(height: 20),
@@ -327,7 +329,7 @@ Widget _buildStat(String name, int value) {
             const SizedBox(height: 24),
             ElevatedButton.icon(
               onPressed: () {
-                firebase.salvarFavorito(widget.name);
+                firebase.salvarFavorito(widget.name, widget.id);
               },
               icon: const Icon(Icons.favorite),
               label: const Text("Salvar favorito"),

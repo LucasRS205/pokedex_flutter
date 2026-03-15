@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FavoritesScreen extends StatelessWidget {
+  
   const FavoritesScreen({super.key});
+  
 
   @override
   Widget build(BuildContext context){
@@ -27,12 +29,34 @@ class FavoritesScreen extends StatelessWidget {
           return ListView.builder(
             itemCount: favoritos.length,
             itemBuilder: (context, index) {
-              final favorito = favoritos[index];
-              return ListTile(
-                leading: const Icon(Icons.favorite, color: Colors.red),
-                title: Text(favorito["pokemon"]),
-              );
-            },
+  final favorito = favoritos[index];
+  final data = favorito.data() as Map<String, dynamic>;
+  final nome = favorito["pokemon"];
+  final pokemonId = data["id"];
+
+
+  return ListTile(
+    leading: pokemonId != null
+        ? Image.network(
+            "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/$pokemonId.png",
+            width: 50,
+          )
+        : const Icon(Icons.favorite, color: Colors.red),
+    title: Text(
+      nome.toUpperCase(),
+      style: const TextStyle(fontWeight: FontWeight.bold),
+    ),
+    trailing: IconButton(
+      icon: const Icon(Icons.delete, color: Colors.red),
+      onPressed: () {
+        FirebaseFirestore.instance
+            .collection("favoritos")
+            .doc(favorito.id)
+            .delete();
+      },
+    ),
+  );
+},
           );
         },
       ),
