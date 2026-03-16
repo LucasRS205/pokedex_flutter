@@ -1,17 +1,142 @@
-# pokedex_app
+#  Pokédex Flutter
 
-A new Flutter project.
+Aplicação desenvolvida em **Flutter** que consome dados da **PokéAPI** e utiliza **Firebase Firestore** para armazenar Pokémons favoritos.
 
-## Getting Started
+Este projeto foi desenvolvido como trabalho acadêmico para demonstrar o consumo de APIs e integração com Firebase.
 
-This project is a starting point for a Flutter application.
+---
 
-A few resources to get you started if this is your first Flutter project:
+#  Funcionalidades
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+✔ Listagem dos **151 primeiros Pokémon**
+✔ Pesquisa por nome
+✔ Tela de detalhes do Pokémon
+✔ Exibição de:
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+* imagem
+* descrição
+* tipo
+* altura
+* peso
+* estatísticas
+
+✔ Sistema de **favoritos usando Firebase Firestore**
+✔ Tela de Pokémons favoritos
+✔ Cards estilizados por tipo de Pokémon
+✔ Animação de transição entre telas
+
+---
+
+#  Tecnologias utilizadas
+
+* **Flutter**
+* **Dart**
+* **PokéAPI**
+* **Firebase Firestore**
+* **HTTP package**
+
+---
+
+#  API utilizada
+
+PokéAPI
+
+https://pokeapi.co/
+
+---
+
+#  Firebase
+
+O projeto utiliza **Firebase Firestore** para armazenar os Pokémons marcados como favoritos.
+
+Estrutura da coleção:
+
+```
+favoritos
+ └ pokemon
+ └ id
+```
+
+---
+
+#  Estrutura do projeto
+
+```
+lib/
+│
+├── screens/
+│   ├── pokemon_list.dart
+│   ├── pokemon_details.dart
+│   └── favorites_screen.dart
+│
+├── services/
+│   └── firebase_service.dart
+│
+└── main.dart
+```
+
+---
+
+# ▶ Como executar o projeto
+
+### 1️ Clonar o repositório
+
+```
+git clone https://github.com/SEU_USUARIO/pokedex_flutter.git
+```
+
+### 2️ Entrar na pasta
+
+```
+cd pokedex_flutter
+```
+
+### 3️ Instalar dependências
+
+```
+flutter pub get
+```
+
+### 4️ Executar o projeto
+
+```
+flutter run
+```
+
+---
+
+#  Prints da aplicação
+
+## Tela inicial
+
+(lista de Pokémon)
+
+## Tela de detalhes
+
+(informações do Pokémon)
+
+## Tela de favoritos
+
+---
+
+#  Arquitetura da aplicação
+
+O aplicativo segue a seguinte estrutura:
+
+```
+Flutter App
+    │
+    ├── PokéAPI
+    │      └ dados dos Pokémon
+    │
+    └── Firebase Firestore
+           └ favoritos
+```
+
+---
+
+#  Download
+
+APK ou versão Web do aplicativo.
+
+---
