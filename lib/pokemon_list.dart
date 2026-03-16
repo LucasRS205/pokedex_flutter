@@ -34,7 +34,7 @@ class _PokemonListState extends State<PokemonList> {
 
     final response = await http.get(
       Uri.parse("https://pokeapi.co/api/v2/pokemon?limit=151"),
-    ).timeout(const Duration(seconds: 15));
+    );
 
     final data = jsonDecode(response.body);
     final results = data["results"] as List;
@@ -151,14 +151,20 @@ class _PokemonListState extends State<PokemonList> {
 }
 
   Color getSimpleCardColor(int id) {
-  if (id <= 3) return Colors.green.shade300;
-  if (id <= 6) return Colors.orange.shade300;
-  if (id <= 9) return Colors.blue.shade300;
-  if (id == 25) return Colors.yellow.shade600;
-  if (id == 39) return Colors.pink.shade300;
-  if (id == 94) return Colors.deepPurple.shade300;
-  if (id == 150 || id == 151) return Colors.indigo.shade300;
-  return Colors.grey.shade400;
+  final colors = [
+    Colors.green.shade300,
+    Colors.orange.shade300,
+    Colors.blue.shade300,
+    Colors.purple.shade300,
+    Colors.pink.shade300,
+    Colors.yellow.shade600,
+    Colors.teal.shade300,
+    Colors.red.shade300,
+    Colors.indigo.shade300,
+    Colors.brown.shade300,
+  ];
+
+  return colors[(id - 1) % colors.length];
 }
 
   @override
