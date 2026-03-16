@@ -1,39 +1,100 @@
-#  Pokédex Flutter
+📱 Pokedex Flutter
 
-Aplicação desenvolvida em **Flutter** que consome dados da **PokéAPI** e utiliza **Firebase Firestore** para armazenar Pokémons favoritos.
+Aplicativo mobile desenvolvido com Flutter que consome a PokeAPI para exibir informações dos primeiros 151 Pokémon da primeira geração.
 
-Este projeto foi desenvolvido como trabalho acadêmico para demonstrar o consumo de APIs e integração com Firebase.
+O aplicativo permite:
 
----
+visualizar Pokémon em formato de cards
 
-#  Funcionalidades
+pesquisar Pokémon por nome ou número
 
-✔ Listagem dos **151 primeiros Pokémon**
-✔ Pesquisa por nome
-✔ Tela de detalhes do Pokémon
-✔ Exibição de:
+visualizar detalhes completos
 
-* imagem
-* descrição
-* tipo
-* altura
-* peso
-* estatísticas
+salvar Pokémon como favoritos
 
-✔ Sistema de **favoritos usando Firebase Firestore**
-✔ Tela de Pokémons favoritos
-✔ Cards estilizados por tipo de Pokémon
-✔ Animação de transição entre telas
+armazenar favoritos no Firebase Firestore
 
----
+🚀 Tecnologias Utilizadas
 
-#  Tecnologias utilizadas
+Flutter
 
-* **Flutter**
-* **Dart**
-* **PokéAPI**
-* **Firebase Firestore**
-* **HTTP package**
+Dart
+
+PokeAPI
+
+Firebase
+
+Cloud Firestore
+
+📦 Funcionalidades
+📋 Lista de Pokémon
+
+A tela principal apresenta os primeiros 151 Pokémon da Pokédex organizados em cards coloridos.
+
+Cada card contém:
+
+número do Pokémon
+
+nome
+
+sprite oficial
+
+cores diferentes para melhor visualização
+<img width="478" height="992" alt="Captura de tela 2026-03-16 115337" src="https://github.com/user-attachments/assets/cb13b573-bff0-4484-a884-887702abc51c" />
+
+
+🔎 Pesquisa de Pokémon
+
+O aplicativo permite buscar Pokémon pelo nome ou número da Pokédex.
+
+Exemplo:
+
+magikarp
+
+151
+
+<img width="455" height="348" alt="Captura de tela 2026-03-16 115439" src="https://github.com/user-attachments/assets/581a2280-cf22-4640-abe5-9776abfbf241" />
+
+<img width="451" height="354" alt="Captura de tela 2026-03-16 115500" src="https://github.com/user-attachments/assets/170beaac-c103-43d7-94ed-82f1d6ed8516" />
+
+📖 Tela de Detalhes
+
+Ao clicar em um Pokémon, o aplicativo abre uma tela com informações detalhadas:
+
+imagem ampliada
+
+descrição da Pokédex
+
+tipo do Pokémon
+
+altura
+
+peso
+
+estatísticas base
+
+<img width="470" height="1035" alt="Captura de tela 2026-03-16 115308" src="https://github.com/user-attachments/assets/3a9f06be-4f8f-4883-9d72-591d3b8c2f4b" />
+
+
+📖 Tela de Detalhes
+
+Ao clicar em um Pokémon, o aplicativo abre uma tela com informações detalhadas:
+
+imagem ampliada
+
+descrição da Pokédex
+
+tipo do Pokémon
+
+altura
+
+peso
+
+estatísticas base
+
+<img width="470" height="1035" alt="Captura de tela 2026-03-16 115308" src="https://github.com/user-attachments/assets/a32e3d67-6e52-4fbd-bb2f-472036c63222" />
+
+<img width="458" height="282" alt="Captura de tela 2026-03-16 115400" src="https://github.com/user-attachments/assets/90b9bc41-fa9e-4f4f-887c-7cbd398d3b04" />
 
 ---
 
@@ -53,9 +114,23 @@ Estrutura da coleção:
 
 ```
 favoritos
- └ pokemon
- └ id
+ └ pokemon: bulbasaur
+ └ id: 1
+
+<img width="1368" height="723" alt="Captura de tela 2026-03-16 120210" src="https://github.com/user-attachments/assets/3f253539-7a76-4af8-a3ee-8482f3bc5490" />
+
 ```
+📊 Painel Firebase
+
+O Firebase também permite acompanhar:
+
+leituras no banco
+
+gravações
+
+analytics do aplicativo
+
+<img width="578" height="704" alt="Captura de tela 2026-03-16 120253" src="https://github.com/user-attachments/assets/c671940f-e694-428d-bed7-86718ac5f33f" />
 
 ---
 
@@ -132,7 +207,41 @@ Flutter App
     └── Firebase Firestore
            └ favoritos
 ```
+🎯 Objetivo do Projeto
 
+Este projeto foi desenvolvido com o objetivo de praticar:
+
+desenvolvimento mobile com Flutter
+
+consumo de API REST
+
+manipulação de dados assíncronos
+
+criação de interfaces modernas
+
+integração com Firebase
+---
+
+👨‍💻 Autor
+
+Lucas Ramos Silva
+
+Estudante de Engenharia de Software
+
+GitHub
+https://github.com/LucasRS205
+
+⭐ Melhorias Futuras
+
+animações de transição entre telas
+
+cache de dados para melhorar performance
+
+filtros por tipo de Pokémon
+
+paginação para gerações futuras
+
+modo escuro
 ---
 
 #  Download
