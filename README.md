@@ -179,4 +179,3 @@ flutter pub get
 - Modo escuro
 - Melhor responsividade
 
-## 📂 Estrutura do Projeto
