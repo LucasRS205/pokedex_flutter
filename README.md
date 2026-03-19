@@ -57,24 +57,6 @@ magikarp
 
 <img width="451" height="354" alt="Captura de tela 2026-03-16 115500" src="https://github.com/user-attachments/assets/170beaac-c103-43d7-94ed-82f1d6ed8516" />
 
-📖 Tela de Detalhes
-
-Ao clicar em um Pokémon, o aplicativo abre uma tela com informações detalhadas:
-
-imagem ampliada
-
-descrição da Pokédex
-
-tipo do Pokémon
-
-altura
-
-peso
-
-estatísticas base
-
-<img width="470" height="1035" alt="Captura de tela 2026-03-16 115308" src="https://github.com/user-attachments/assets/3a9f06be-4f8f-4883-9d72-591d3b8c2f4b" />
-
 
 📖 Tela de Detalhes
 
@@ -113,11 +95,11 @@ O projeto utiliza **Firebase Firestore** para armazenar os Pokémons marcados co
 Estrutura da coleção:
 
 ```
+
 favoritos
  └ pokemon: bulbasaur
  └ id: 1
 
-<img width="1368" height="723" alt="Captura de tela 2026-03-16 120210" src="https://github.com/user-attachments/assets/3f253539-7a76-4af8-a3ee-8482f3bc5490" />
 
 ```
 📊 Painel Firebase
