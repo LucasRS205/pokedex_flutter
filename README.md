@@ -163,16 +163,6 @@ flutter pub get
 
 ### 4. Rodar o projeto
 
-
----
-
-## 📱 Prints da Aplicação
-
-Tela Inicial  
-Tela de Pesquisa  
-Tela de Detalhes  
-Tela de Favoritos  
-
 ---
 
 ## 📥 Download e Teste
