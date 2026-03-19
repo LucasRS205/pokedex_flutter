@@ -72,7 +72,8 @@ lib/
 - Layout em grid
 - Cards estilizados e responsivos
 
-![Home](assets/images/home.png)
+<img width="478" height="992" alt="Captura de tela 2026-03-16 115337" src="https://github.com/user-attachments/assets/578fd484-599a-4071-b649-c57bd2008250" />
+
 
 ---
 
@@ -81,7 +82,11 @@ lib/
 - Busca por nome ou número
 - Atualização em tempo real
 
-![Search](assets/images/search.png)
+<img width="455" height="348" alt="Captura de tela 2026-03-16 115439" src="https://github.com/user-attachments/assets/280c6fef-9265-4518-b32c-7f741901ad5e" />
+
+<img width="451" height="354" alt="Captura de tela 2026-03-16 115500" src="https://github.com/user-attachments/assets/d9daf9de-1b84-44cb-931c-d9e351def59f" />
+
+
 
 ---
 
@@ -92,7 +97,8 @@ lib/
 - Altura e peso
 - Status (HP, Attack, Defense, Speed)
 
-![Details](assets/images/details.png)
+<img width="470" height="1035" alt="Captura de tela 2026-03-16 115308" src="https://github.com/user-attachments/assets/2850633c-c5e7-4646-a5ac-5642060920b4" />
+
 
 ---
 
@@ -102,7 +108,8 @@ lib/
 - Listar favoritos
 - Remover com botão
 
-![Favorites](assets/images/favorites.png)
+<img width="458" height="282" alt="Captura de tela 2026-03-16 115400" src="https://github.com/user-attachments/assets/45a6882e-31ac-4749-ab62-abf25d178dbb" />
+
 
 ---
 
@@ -113,7 +120,8 @@ Os favoritos são armazenados no Firestore com estrutura simples:
 - id
 - nome do Pokémon
 
-![Firestore](assets/images/firestore.png)
+<img width="1368" height="723" alt="Captura de tela 2026-03-16 120210" src="https://github.com/user-attachments/assets/263caf14-b6b7-4259-94e0-5baa86c1c9ef" />
+
 
 ---
 
@@ -125,7 +133,8 @@ Monitoramento de uso do app:
 - Escritas
 - Analytics
 
-![Firebase](assets/images/firebase.png)
+<img width="578" height="704" alt="Captura de tela 2026-03-16 120253" src="https://github.com/user-attachments/assets/a2e455ac-fc32-4bd3-b4d7-9f66f194ceb3" />
+
 
 ---
 
@@ -165,11 +174,6 @@ flutter pub get
 
 ---
 
-## 📥 Download e Teste
-
-(Em breve)
-
----
 
 ## ⭐ Melhorias Futuras
 
