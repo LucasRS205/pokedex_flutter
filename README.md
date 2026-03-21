@@ -43,6 +43,7 @@ App Flutter → PokeAPI (dados)
 App Flutter → Firebase (favoritos)
 
 ---
+```
 lib/
 ├── screens/
 │ ├── pokemon_list.dart # Lista principal
@@ -50,7 +51,7 @@ lib/
 │ └── favorites_screen.dart # Tela de favoritos
 │
 ├── main.dart # Inicialização do app
-
+```
 
 ---
 
