@@ -178,7 +178,7 @@ flutter pub get
 
 Baixe a versão mais recente do aplicativo:
 
-👉 build\app\outputs\flutter-apk\app-release.apk  
+👉 https://github.com/LucasRS205/pokedex_flutter/releases/tag/v1.0 
 
 ## ⭐ Melhorias Futuras
 
