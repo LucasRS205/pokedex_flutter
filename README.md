@@ -172,7 +172,7 @@ flutter pub get
 ---
 
 ### 4. Rodar o projeto
-
+flutter run
 ---
 ## 📥 Download do APK
 
