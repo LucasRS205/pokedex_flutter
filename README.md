@@ -174,7 +174,11 @@ flutter pub get
 ### 4. Rodar o projeto
 
 ---
+## 📥 Download do APK
 
+Baixe a versão mais recente do aplicativo:
+
+👉 build\app\outputs\flutter-apk\app-release.apk  
 
 ## ⭐ Melhorias Futuras
 
